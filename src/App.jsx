@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
@@ -16,6 +16,7 @@ const StartFilmList= [{ title: 'Inception', genere: 'Fantascienza' },
 function App() {
   const [textInput, setTextInput] = useState({ title: '', genere: '' })
   const [FilmList,UpdateFilmList]=  useState(StartFilmList)
+  const [FilterList,setFilterList]= useState([])
 
   function handleSubmit(e){
     e.preventDefault()
@@ -29,7 +30,19 @@ function App() {
     } else {
       setTextInput({...textInput, genere: e.target.value});
     }
-    
+  }
+
+  useEffect(FilterListCreation,["",FilmList])
+
+  function FilterListCreation(){
+    const generes=[]
+    FilmList.forEach((film)=> {
+      if (!generes.includes(film.genere)){
+        generes.push(film.genere)
+      }
+    })
+    setFilterList(generes)
+    console.log(generes)
   }
 
 
@@ -48,6 +61,11 @@ function App() {
         </div>
       </form>
     </div>
+
+    <select className="form-select" aria-label="Default select example">
+      <option>Open this select menu</option>
+      {FilterList.map((item,index)=>(<option key={index} value={item}>{item}</option>))}
+    </select>
     </>
   )
 }
