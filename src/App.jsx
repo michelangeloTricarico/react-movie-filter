@@ -46,7 +46,20 @@ function App() {
     console.log(generes)
   }
 
-
+  function MakeFilterFilm(e){
+    let filteredList=[]
+    console.log(e.target.value)
+    if (e.target.value !== "null"){
+      FilmList.forEach((film)=>{
+        if (film.genere === e.target.value ){
+        filteredList.push(film)}})
+    }
+    else{
+        filteredList = FilmList
+    }
+    UpdateFilterFilmList(filteredList)
+  }
+  
   return (
     <>
     <div className="card mx-auto text-bg-light">
@@ -62,8 +75,8 @@ function App() {
         </div>
       </form>
     </div>
-    <select className="form-select w-auto mx-auto mt-3" aria-label="Default select example">
-      <option>Open this select menu</option>
+    <select onChange={MakeFilterFilm} className="form-select w-auto mx-auto mt-3" aria-label="Default select example">
+      <option value="null">Open this select menu</option>
       {FilterList.map((item,index)=>(<option key={index} value={item}>{item}</option>))}
     </select>
 
