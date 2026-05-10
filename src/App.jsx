@@ -17,6 +17,7 @@ function App() {
   const [textInput, setTextInput] = useState({ title: '', genere: '' })
   const [FilmList,UpdateFilmList]=  useState(StartFilmList)
   const [FilterList,setFilterList]= useState([])
+  const [filterFilmList,UpdateFilterFilmList]=  useState(StartFilmList)
 
   function handleSubmit(e){
     e.preventDefault()
@@ -61,11 +62,27 @@ function App() {
         </div>
       </form>
     </div>
-
-    <select className="form-select" aria-label="Default select example">
+    <select className="form-select w-auto mx-auto mt-3" aria-label="Default select example">
       <option>Open this select menu</option>
       {FilterList.map((item,index)=>(<option key={index} value={item}>{item}</option>))}
     </select>
+
+    <table className="table table-striped m-2">
+      <thead>
+        <tr>
+          <th scope="col">Film</th>
+          <th scope="col">Genere</th>
+        </tr>
+      </thead>
+      <tbody>
+      {filterFilmList.map((film,index)=>(
+        <tr key={index}>
+          <td>{film.title}</td>
+          <td>{film.genere}</td>
+        </tr>
+      ))}
+      </tbody>
+    </table>
     </>
   )
 }
