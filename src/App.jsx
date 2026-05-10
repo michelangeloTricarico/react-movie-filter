@@ -3,6 +3,9 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
+import Form from './components/Form'
+import Select from './components/Select'
+import Table from './components/Table'
 
 
 const StartFilmList= [{ title: 'Inception', genere: 'Fantascienza' },
@@ -23,6 +26,7 @@ function App() {
     e.preventDefault()
     UpdateFilmList([...FilmList,textInput])
     console.log(FilmList)
+    setTextInput({...textInput, title: "", genere:"" });
   }
   
   function setInput(e) {
@@ -59,43 +63,12 @@ function App() {
     }
     UpdateFilterFilmList(filteredList)
   }
-  
+
   return (
     <>
-    <div className="card mx-auto text-bg-light">
-      <form className="row g-3 mx-auto mt-2" onSubmit={handleSubmit}>
-        <div className="col-auto">
-          <input type="film_name" name="title" onChange={setInput} value={textInput.title} className="form-control" id="film_name" placeholder="Inserire nome film"/>
-        </div>
-        <div className="col-auto">
-          <input type="film_type" name="genere" onChange={setInput} value={textInput.genere}  className="form-control" id="film_type" placeholder="Inserire tipo film"/>
-        </div>
-        <div className="col-auto">
-          <button type="submit" className="btn btn-primary mb-3">Aggiungi Film</button>
-        </div>
-      </form>
-    </div>
-    <select onChange={MakeFilterFilm} className="form-select w-auto mx-auto mt-3" aria-label="Default select example">
-      <option value="null">Open this select menu</option>
-      {FilterList.map((item,index)=>(<option key={index} value={item}>{item}</option>))}
-    </select>
-
-    <table className="table table-striped m-2">
-      <thead>
-        <tr>
-          <th scope="col">Film</th>
-          <th scope="col">Genere</th>
-        </tr>
-      </thead>
-      <tbody>
-      {filterFilmList.map((film,index)=>(
-        <tr key={index}>
-          <td>{film.title}</td>
-          <td>{film.genere}</td>
-        </tr>
-      ))}
-      </tbody>
-    </table>
+    <Form handleSubmit={handleSubmit} setInput={setInput} textInput={textInput} ></Form>
+    <Select MakeFilterFilm={MakeFilterFilm} FilterList={FilterList}></Select>
+    <Table filterFilmList={filterFilmList}></Table>
     </>
   )
 }
